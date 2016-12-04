@@ -103,7 +103,7 @@
 		
 		else if($places)
 		{
-			$query = array('address' => $data['address']);
+			$query = array('name' => $data['name']);
 			$unique = $places->findOne($query);	
 			
 			if($unique)
@@ -118,7 +118,8 @@
 			{	
 				$addPlace = array(
 				'gId' => $data['gId'],
-				'category' => $data['category'],					
+				'category' => $data['category'],	
+			    'name' => $data['name'],
 				'address' => $data['address'],		
 				'rating' => $data['rating'],
 				'comments' => $data['comments']);
