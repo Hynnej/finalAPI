@@ -43,7 +43,7 @@
 			}	
 			
 			header('Content-type: application/json');
-			echo json_encode($data);	
+			echo json_encode((object)$data);	
 		}	
 		
 		if($method == "POST")
