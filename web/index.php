@@ -24,6 +24,7 @@
 			header('Content-type: application/json');
 			echo json_encode(iterator_to_array($data));
 		}
+		
 		else
 		{
 			if(empty($places))
@@ -51,9 +52,11 @@
 	
 	if($method == "POST")
 	{
+		$data = json_decode(file_get_contents("php://input"), true);
+		
 		if(empty(gId))
 		{	
-			$data = json_decode(file_get_contents("php://input"), true);
+
 			$query = array('gId' => $data['gId']);
 			$unique = $users->findOne($query);	
 			
@@ -85,7 +88,6 @@
 		
 		else
 		{
-			$data = json_decode(file_get_contents("php://input"), true);
 			$query = array('address' => $data['address']);
 			$unique = $places->findOne($query);	
 			
@@ -117,3 +119,7 @@
 			
 		}	
 	}
+	
+	
+	
+?>
