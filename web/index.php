@@ -1,6 +1,6 @@
 <?php
 	require('../vendor/autoload.php');
-	
+	phpinfo();
 	//connects to mongodb hosted at mlabs
 	$uri = "mongodb://sirmiq:door5454@ds119718.mlab.com:19718/fproject";
 	$client = new MongoDB\Client($uri);
