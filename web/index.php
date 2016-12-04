@@ -50,7 +50,7 @@
 		
 	}	
 	
-	if($method == "POST")
+/*	if($method == "POST")
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
 		
@@ -118,7 +118,7 @@
 			}				
 			
 		}	
-	}
+	}*/
 	
 	
 	
