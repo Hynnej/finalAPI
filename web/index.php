@@ -21,7 +21,7 @@
 		var_dump($data);
 	}
 
-	if(doc == "users")
+	if($doc == "users")
 	{
 		if($method == "GET")
 		{
