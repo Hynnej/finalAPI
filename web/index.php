@@ -33,7 +33,7 @@
 			
 				if(empty($data))
 				{
-					$data = array("response" => "User has no places.");
+					$data = array("response" => "User does not exist.");
 					header('Content-type: application/json');
 					echo json_encode((object)($data));
 				}	
@@ -49,12 +49,24 @@
 		{
 			$query = array("gId" => $gId);
 			$data= $places->find($query);	
-			header('Content-type: application/json');
-			echo json_encode(iterator_to_array($data));
+			
+				if(empty($data))
+				{
+					$data = array("response" => "User has no places.");
+					header('Content-type: application/json');
+					echo json_encode((object)($data));
+				}
+				
+			else
+			{		
+				header('Content-type: application/json');
+				echo json_encode(iterator_to_array($data));
+			}	
 		}	
 	}	
+				
 	
-/*	else if($method == "POST")
+	else if($method == "POST")
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
 		
@@ -121,7 +133,7 @@
 			}				
 			
 		}	
-	}*/
+	}
 	
 	
 	
