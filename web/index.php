@@ -28,6 +28,8 @@
 			if(empty($gId))
 			{			
 				$data = $users->find();
+				header('Content-type: application/json');
+				echo json_encode(iterator_to_array($data));
 			}
 
 			else
@@ -39,10 +41,12 @@
 				{
 					$data = array("response" => "No user with that gId was found.");
 				}	
+			
+				header('Content-type: application/json');
+				echo json_encode($data);	
 			}	
 			
-			header('Content-type: application/json');
-			echo json_encode($data);	
+
 		}	
 		
 		if($method == "POST")
