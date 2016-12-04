@@ -28,7 +28,6 @@
 			if(empty($gId))
 			{			
 				$data = $users->find();
-				var_dump($data);
 			}
 
 			else
@@ -43,7 +42,7 @@
 			}	
 			
 			header('Content-type: application/json');
-			echo json_encode((object)$data);	
+			echo json_encode($data);	
 		}	
 		
 		if($method == "POST")
