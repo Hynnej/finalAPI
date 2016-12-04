@@ -28,11 +28,7 @@
 			if(empty($gId))
 			{			
 				$data = $users->find();
-					
-				foreach($data as $user)
-				{
-					$list[] = $team["name"];
-				}			
+				var_dump($data);
 			}
 
 			else
