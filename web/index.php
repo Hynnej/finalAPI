@@ -13,7 +13,7 @@
 	$request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 	$doc = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	$gId = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
-	$places = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
+	$place = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	$category = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	
 	if($method == "GET")
@@ -25,7 +25,7 @@
 			echo json_encode(iterator_to_array($data));
 		}
 		
-		else if(empty($places))
+		else if(empty($place))
 		{
 			$query = array('gId' => $gId);
 			$data= $users->findOne($query);	
@@ -101,7 +101,7 @@
 			}			
 		}
 		
-		else if($places)
+		else if($place)
 		{
 			$query = array('name' => $data['name']);
 			$unique = $places->findOne($query);	
