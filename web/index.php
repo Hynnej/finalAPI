@@ -65,7 +65,7 @@
 				'gId' => $data['gId'],
 				'fname' => $data['fname'],					
 				'lname' => $data['lname'],		
-				'division' => $data['division']);
+				'email' => $data['email']);
 					
 				$users->insertOne($addUser);
 					
