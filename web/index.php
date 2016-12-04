@@ -25,38 +25,41 @@
 			echo json_encode(iterator_to_array($data));
 		}
 		
-		else
+		else if(empty($places))
 		{
-			if(empty($places))
-			{
-				$query = array('gId' => $gId);
-				$data= $users->findOne($query);	
-				
+			$query = array('gId' => $gId);
+			$data= $users->findOne($query);	
+
+			
 				if(empty($data))
 				{
 					$data = array("response" => "User has no places.");
+					header('Content-type: application/json');
+					echo json_encode((object)($data));
 				}	
 				
 				else
 				{
-					$query = array("gId" => $gId);
-					$data= $places->find($query);	
-				}	
-			
-				header('Content-type: application/json');
-				echo json_encode(iterator_to_array($data);	
-			}	
+					header('Content-type: application/json');
+					echo json_encode($data);	
+				}
 		}	
-		
+				
+		else
+		{
+			$query = array("gId" => $gId);
+			$data= $places->find($query);	
+			header('Content-type: application/json');
+			echo json_encode(iterator_to_array($data));
+		}	
 	}	
 	
-/*	if($method == "POST")
+/*	else if($method == "POST")
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
 		
 		if(empty(gId))
 		{	
-
 			$query = array('gId' => $data['gId']);
 			$unique = $users->findOne($query);	
 			
@@ -86,7 +89,7 @@
 			}			
 		}
 		
-		else
+		else if($places)
 		{
 			$query = array('address' => $data['address']);
 			$unique = $places->findOne($query);	
@@ -101,17 +104,17 @@
 			
 			else
 			{	
-				$addUser = array(
+				$addPlace = array(
 				'gId' => $data['gId'],
 				'category' => $data['category'],					
 				'address' => $data['address'],		
 				'rating' => $data['rating'],
 				'comments' => $data['comments']);
 					
-				$users->insertOne($addUser);
+				$places->insertOne($addPlace);
 					
 				//creates response to send to client
-				$response = array('response' => 'user was added');
+				$response = array('response' => 'Place was added');
 				header('Content-type: application/json');
 				echo json_encode((object)$response);
 					
