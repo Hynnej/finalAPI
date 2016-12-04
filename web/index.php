@@ -1,56 +1,59 @@
 <?php
 	require('../vendor/autoload.php');
-
 	//connects to mongodb hosted at mlabs
 	$uri = "mongodb://sirmiq:door5454@ds119718.mlab.com:19718/fproject";
 	$client = new MongoDB\Client($uri);
 	$db = $client->fproject;
 	$users = $db->users;
-
+	$places = $db->places;
+	
 	
 	//gathers data sent
 	$method = $_SERVER['REQUEST_METHOD'];
 	$request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 	$doc = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
-	$gId = 	preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
-
+	$gId = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
+	$places = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
+	$category = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	
-	if($method == "POST")
+	if($method == "GET")
 	{
-		 $data = json_decode(file_get_contents("php://input"), true);
-		var_dump($data);
-	}
-
-	if($doc == "users")
-	{
-		if($method == "GET")
+		if(empty($gId))
+		{			
+			$data = $users->find();
+			header('Content-type: application/json');
+			echo json_encode(iterator_to_array($data));
+		}
+		else
 		{
-			if(empty($gId))
-			{			
-				$data = $users->find();
-				header('Content-type: application/json');
-				echo json_encode(iterator_to_array($data));
-			}
-
-			else
+			if(empty($places))
 			{
 				$query = array('gId' => $gId);
 				$data= $users->findOne($query);	
 				
 				if(empty($data))
 				{
-					$data = array("response" => "No user with that gId was found.");
+					$data = array("response" => "User has no places.");
+				}	
+				
+				else
+				{
+					$query = array("gId" => $gId);
+					$data= $places->find($query);	
 				}	
 			
 				header('Content-type: application/json');
-				echo json_encode($data);	
+				echo json_encode(iterator_to_array($data);	
 			}	
-			
-
 		}	
 		
-		if($method == "POST")
-		{
+	}	
+	
+	if($method == "POST")
+	{
+		if(empty(gId))
+		{	
+			$data = json_decode(file_get_contents("php://input"), true);
 			$query = array('gId' => $data['gId']);
 			$unique = $users->findOne($query);	
 			
@@ -78,8 +81,39 @@
 				echo json_encode((object)$response);
 					
 			}			
+		}
+		
+		else
+		{
+			$data = json_decode(file_get_contents("php://input"), true);
+			$query = array('address' => $data['address']);
+			$unique = $places->findOne($query);	
+			
+			if($unique)
+			{
+				//creates response to send to client
+				$response = array("response" => "The user has already included this place.  Entry not added.");					
+				header('Content-type: application/json');
+				echo json_encode((object)$response);
+			}	
+			
+			else
+			{	
+				$addUser = array(
+				'gId' => $data['gId'],
+				'category' => $data['category'],					
+				'address' => $data['address'],		
+				'rating' => $data['rating'],
+				'comments' => $data['comments']);
+					
+				$users->insertOne($addUser);
+					
+				//creates response to send to client
+				$response = array('response' => 'user was added');
+				header('Content-type: application/json');
+				echo json_encode((object)$response);
+					
+			}				
+			
 		}	
-	}	
-	
-	
-?>	
+	}
