@@ -16,8 +16,10 @@
 	$place = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	$pname = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	
+	//handles get requests
 	if($method == "GET")
 	{
+		//gets all users data
 		if(empty($gId))
 		{			
 			$data = $users->find();
@@ -25,6 +27,7 @@
 			echo json_encode(iterator_to_array($data));
 		}
 		
+		//gets specific user data
 		else if(empty($place))
 		{
 			$query = array('gId' => $gId);
@@ -44,11 +47,32 @@
 					echo json_encode($data);	
 				}
 		}	
-				
-		else
+		
+		//gets all places associated with a user
+		else if(empty($pname))
 		{
 			$query = array("gId" => $gId);
 			$data= $places->find($query);	
+			
+				if(empty($data))
+				{
+					$data = array("response" => "User has no places with that name.");
+					header('Content-type: application/json');
+					echo json_encode((object)($data));
+				}
+				
+				else
+				{		
+					header('Content-type: application/json');
+					echo json_encode($data);
+				}	
+		}	
+		
+		//gets specific place with given name
+		else
+		{
+			$query = array($and, 'gId' => $gId, 'name' => $pname);
+			$data = findOne($query);
 			
 				if(empty($data))
 				{
@@ -57,24 +81,26 @@
 					echo json_encode((object)($data));
 				}
 				
-			else
-			{		
-				header('Content-type: application/json');
-				echo json_encode(iterator_to_array($data));
-			}	
+				else
+				{		
+					header('Content-type: application/json');
+					echo json_encode(iterator_to_array($data));
+				}	
 		}	
 	}	
 				
-	
+	//Hand'es Post Request
 	else if($method == "POST")
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
 		
+		//addes a new user
 		if(empty($gId))
 		{	
 			$query = array('gId' => $data['gId']);
 			$unique = $users->findOne($query);	
 			
+			//checks if unique user
 			if($unique)
 			{
 				//creates response to send to client
@@ -82,7 +108,8 @@
 				header('Content-type: application/json');
 				echo json_encode((object)$response);
 			}				
-				
+	
+			//if unique adds
 			else
 			{	
 				$addUser = array(
@@ -101,11 +128,13 @@
 			}			
 		}
 		
+		//adds a new place
 		else if($place)
 		{
 			$query = array('name' => $data['name']);
 			$unique = $places->findOne($query);	
 			
+			//checks if place is unique
 			if($unique)
 			{
 				//creates response to send to client
@@ -114,6 +143,7 @@
 				echo json_encode((object)$response);
 			}	
 			
+			//if unique adds
 			else
 			{	
 				$addPlace = array(
@@ -136,6 +166,7 @@
 		}	
 	}
 	
+	//handes put requests
 	else if($method == "PUT")
 	{		
 		$data = json_decode(file_get_contents("php://input"), true);
@@ -146,6 +177,7 @@
 			echo json_encode((object)($data));
 		}
 		
+		//changes user data
 		else if(empty($place))
 		{
 			$query = array('gId' => $gId);
@@ -161,6 +193,7 @@
 			echo json_encode((object)($data));					
 		}
 		
+		//error if no place name specified
 		else if(empty($pname))
 		{
 			$data = array("response" => "Must provide place name");
@@ -168,6 +201,7 @@
 			echo json_encode((object)($data));	
 		}	
 		
+		//Replaces place data
 		else
 		{
 			$query = array($and, 'gId' => $gId, 'name' => $pname);
@@ -189,8 +223,10 @@
 		}
 	}
 	
+	//handles DELETE requests
 	else if($method == "DELETE")
 	{		
+		//if no gId given responds with correct ussage message
 		if(empty($gId))
 		{
 			$data = array("response" => "Must give a gId to delete a user, and a gId and name to delete a place.");
@@ -198,6 +234,7 @@
 			echo json_encode((object)($data));
 		}
 		
+		//Checks to see if User or place should be deleted
 		else if(empty($place))
 		{
 			$query = array('gId' => $gId);
