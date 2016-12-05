@@ -149,18 +149,13 @@
 		{
 			$query = array('gId' => $gId);
 
-			if($users->remove('gId' => $gId))
-			{	
+			$users->removearray('gId' => $gId));
+				
 				$data = array("response" => "User Info and Places Deleted");
 				header('Content-type: application/json');
 				echo json_encode((object)($data));
-			}
-			else
-			{
-				$data = array("response" => "Error deleting user.");
-				header('Content-type: application/json');
-				echo json_encode((object)($data));
-			}
+			
+
 				
 		}
 	}
