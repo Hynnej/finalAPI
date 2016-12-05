@@ -52,7 +52,7 @@
 		else if(empty($pname))
 		{
 			$query = array("gId" => $gId);
-			$data= $places->find($query);	
+			$data= $places->findOne($query);	
 			
 				if(empty($data))
 				{
