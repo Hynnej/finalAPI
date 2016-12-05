@@ -52,7 +52,7 @@
 		else if(empty($pname))
 		{
 			$query = array("gId" => $gId);
-			$data= $places->findOne($query);	
+			$data= $places->find($query);	
 			
 				if(empty($data))
 				{
@@ -64,7 +64,8 @@
 				else
 				{		
 					header('Content-type: application/json');
-					echo json_encode($data);
+					echo json_encode(iterator_to_array($data));
+
 				}	
 		}	
 		
@@ -84,7 +85,7 @@
 				else
 				{		
 					header('Content-type: application/json');
-					echo json_encode(iterator_to_array($data));
+					echo json_encode($data);
 				}	
 		}	
 	}	
