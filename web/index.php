@@ -136,6 +136,38 @@
 		}	
 	}
 	
+	else if($method == "DELETE")
+	{		
+		if(empty($gId)
+		{
+			$data = array("response" => "Must give a gId to delete a user, and a gId and name to delete a place.");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));
+		}
+		
+		else if(empty($place))
+		{
+			$query = array('gId' => $gId);
+			$data= $users->findOne($query);	
+
+				if(empty($data))
+				{
+					$data = array("response" => "User does not exist.");
+					header('Content-type: application/json');
+					echo json_encode((object)($data));
+				}	
+				
+				else
+				{
+					$users->remove(%data);
+					$data = array("response" => "User Info and Places Deleted");
+					header('Content-type: application/json');
+					echo json_encode((object)($data));
+				}
+			
+		}
+	}
+	
 	
 	
 ?>	
