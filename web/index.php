@@ -208,6 +208,27 @@
 			header('Content-type: application/json');
 			echo json_encode((object)($data));					
 		}
+		
+		//Checks to see if place name was provided.  If not deletes of 
+		//of users places
+		else if(empty($pname))
+		{			
+			$query = array('gId' => $gId);
+			$places->deleteMany($query);
+			$data = array("response" => "Deleted all places.");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));	
+		}
+
+		//deletes single user place that matches given name
+		else
+		{
+			$query = array($and, 'gId' => $gId, 'name' => $pname);
+			$places->deleteOne($query);
+			$data = array("response" => "Place Deleted");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));	
+		}
 	}
 	
 	
