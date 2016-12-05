@@ -180,7 +180,7 @@
 			'rating' => $data['rating'],
 			'comments' => $data['comments']);
 			
-			places->replaceOne($query, $changePlace);
+			$places->replaceOne($query, $changePlace);
 			
 			$data = array("response" => "place Info Updated");
 			header('Content-type: application/json');
