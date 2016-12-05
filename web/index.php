@@ -14,7 +14,7 @@
 	$doc = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	$gId = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	$place = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
-	$category = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
+	$name = preg_replace('/[^a-z0-9_]+/i','', array_shift($request));
 	
 	if($method == "GET")
 	{
@@ -156,9 +156,35 @@
 				'email' => $data['email']);
 			$users->replaceOne($query, $replaceUser);
 			
-			$data = array("response" => "User Info and Places Deleted");
+			$data = array("response" => "User Info Updated");
 			header('Content-type: application/json');
 			echo json_encode((object)($data));					
+		}
+		
+		else if(empty($name))
+		{
+			$data = array("response" => "Must provide place name");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));	
+		}	
+		
+		else
+		{
+			$query = array($and, 'gId' => $gId, 'name' => $name);
+				$changePlace = array(
+				'gId' => $data['gId'],
+				'category' => $data['category'],	
+			    'name' => $data['name'],
+				'address' => $data['address'],		
+				'rating' => $data['rating'],
+				'comments' => $data['comments']);
+				
+			places->replaceOne($query, $changePlace);
+			
+			$data = array("response" => "place Info Updated");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));	
+			
 		}
 	}
 	
