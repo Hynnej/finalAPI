@@ -119,7 +119,7 @@
 				$addPlace = array(
 				'gId' => $data['gId'],
 				'category' => $data['category'],	
-			   	'name' => $data['name'],
+			    'name' => $data['name'],
 				'address' => $data['address'],		
 				'rating' => $data['rating'],
 				'comments' => $data['comments']);
@@ -148,15 +148,12 @@
 		else if(empty($place))
 		{
 			$query = array('gId' => $gId);
-
-			$users->deleteOne(array('gId' => $gId));
-				
-				$data = array("response" => "User Info and Places Deleted");
-				header('Content-type: application/json');
-				echo json_encode((object)($data));
 			
-
-				
+			$users->deleteOne($query);
+			$places->deleteMany($query);
+			$data = array("response" => "User Info and Places Deleted");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));					
 		}
 	}
 	
