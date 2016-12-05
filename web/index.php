@@ -136,6 +136,32 @@
 		}	
 	}
 	
+	else if($method == "PUT")
+	{		
+		$data = json_decode(file_get_contents("php://input"), true);
+		if(empty($gId))
+		{
+			$data = array("response" => "Must give a gId to Change a user, and a gId and name to Change a place.");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));
+		}
+		
+		else if(empty($place))
+		{
+			$query = array('gId' => $gId);
+				$replaceUser = array(
+				'gId' => $data['gId'],
+				'fname' => $data['fname'],					
+				'lname' => $data['lname'],		
+				'email' => $data['email']);
+			$users->replaceOne($query, $replaceUser);
+			
+			$data = array("response" => "User Info and Places Deleted");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));					
+		}
+	}
+	
 	else if($method == "DELETE")
 	{		
 		if(empty($gId))
