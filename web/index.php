@@ -149,7 +149,7 @@
 		{
 			$query = array('gId' => $gId);
 
-			if($users->remove($query))
+			if($users->remove('gId' => $gId))
 			{	
 				$data = array("response" => "User Info and Places Deleted");
 				header('Content-type: application/json');
