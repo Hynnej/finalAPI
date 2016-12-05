@@ -49,7 +49,7 @@
 		}	
 		
 		//gets all places associated with a user
-		/*else if(empty($pname))
+		else if(empty($pname))
 		{
 			$query = array("gId" => $gId);
 			$data= $places->find($query);	
@@ -68,7 +68,7 @@
 
 				}	
 		}	
-		
+		/*
 		//gets specific place with given name
 		else
 		{
