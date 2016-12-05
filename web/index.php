@@ -136,7 +136,7 @@
 		}	
 	}
 	
-	else if($method == "DELETE")
+/*	else if($method == "DELETE")
 	{		
 		if(empty($gId)
 		{
@@ -166,7 +166,7 @@
 				}
 			
 		}
-	}
+	}*/
 	
 	
 	
