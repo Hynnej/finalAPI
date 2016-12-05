@@ -70,7 +70,7 @@
 	{
 		$data = json_decode(file_get_contents("php://input"), true);
 		
-		if(empty(gId))
+		if(empty($gId))
 		{	
 			$query = array('gId' => $data['gId']);
 			$unique = $users->findOne($query);	
