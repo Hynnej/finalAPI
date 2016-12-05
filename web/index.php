@@ -72,7 +72,7 @@
 		else
 		{
 			$query = array($and, 'gId' => $gId, 'name' => $pname);
-			$data = findOne($query);
+			$data = places->findOne($query);
 			
 				if(empty($data))
 				{
