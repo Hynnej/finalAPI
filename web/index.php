@@ -136,7 +136,7 @@
 		}	
 	}
 	
-/*	else if($method == "DELETE")
+	else if($method == "DELETE")
 	{		
 		if(empty($gId)
 		{
@@ -148,25 +148,13 @@
 		else if(empty($place))
 		{
 			$query = array('gId' => $gId);
-			$data= $users->findOne($query);	
 
-				if(empty($data))
-				{
-					$data = array("response" => "User does not exist.");
-					header('Content-type: application/json');
-					echo json_encode((object)($data));
-				}	
-				
-				else
-				{
-					$users->remove($query);
-					$data = array("response" => "User Info and Places Deleted");
-					header('Content-type: application/json');
-					echo json_encode((object)($data));
-				}
-			
+			$ret = $users->remove($query);
+			$data = array("response" => "User Info and Places Deleted");
+			header('Content-type: application/json');
+			echo json_encode((object)($data));	
 		}
-	}*/
+	}
 	
 	
 	
