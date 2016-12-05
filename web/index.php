@@ -68,12 +68,12 @@
 
 				}	
 		}	
-		/*
+		
 		//gets specific place with given name
 		else
 		{
 			$query = array($and, 'gId' => $gId, 'name' => $pname);
-			$data = places->findOne($query);
+			$data = $places->findOne($query);
 			
 				if(empty($data))
 				{
@@ -87,7 +87,7 @@
 					header('Content-type: application/json');
 					echo json_encode($data);
 				}
-		}*/
+		}
 	}	
 				
 	//Hand'es Post Request
