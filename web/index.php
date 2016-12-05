@@ -138,7 +138,7 @@
 	
 	else if($method == "DELETE")
 	{		
-		if(empty($gId)
+		if(empty($gId))
 		{
 			$data = array("response" => "Must give a gId to delete a user, and a gId and name to delete a place.");
 			header('Content-type: application/json');
@@ -149,7 +149,7 @@
 		{
 			$query = array('gId' => $gId);
 
-			//$ret = $users->remove($query);
+			$ret = $users->remove($query);
 			$data = array("response" => "User Info and Places Deleted");
 			header('Content-type: application/json');
 			echo json_encode((object)($data));	
