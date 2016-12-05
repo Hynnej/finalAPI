@@ -159,7 +159,7 @@
 			{
 				$data = array("response" => "Error deleting user.");
 				header('Content-type: application/json');
-				echo json_encode((object)($data))
+				echo json_encode((object)($data));
 			}
 				
 		}
