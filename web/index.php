@@ -159,7 +159,7 @@
 				
 				else
 				{
-					$users->remove($data);
+					$users->remove($query);
 					$data = array("response" => "User Info and Places Deleted");
 					header('Content-type: application/json');
 					echo json_encode((object)($data));
