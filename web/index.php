@@ -49,14 +49,14 @@
 		}	
 		
 		//gets all places associated with a user
-		else if(empty($pname))
+		/*else if(empty($pname))
 		{
 			$query = array("gId" => $gId);
 			$data= $places->find($query);	
 			
 				if(empty($data))
 				{
-					$data = array("response" => "User has no places with that name.");
+					$data = array("response" => "User has no places.");
 					header('Content-type: application/json');
 					echo json_encode((object)($data));
 				}
@@ -77,7 +77,7 @@
 			
 				if(empty($data))
 				{
-					$data = array("response" => "User has no places.");
+					$data = array("response" => "User has no places with that name.");
 					header('Content-type: application/json');
 					echo json_encode((object)($data));
 				}
@@ -87,7 +87,7 @@
 					header('Content-type: application/json');
 					echo json_encode($data);
 				}	
-		}	
+		}	/
 	}	
 				
 	//Hand'es Post Request
